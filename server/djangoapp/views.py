@@ -12,18 +12,19 @@ logger = logging.getLogger(__name__)
 
 # Create your views here.
 
+
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
-    if request.method != 'POST':
-        return JsonResponse({'error': 'POST request required'}, status=405)
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required"}, status=405)
 
     try:
         data = json.loads(request.body)
-        username = data['userName']
-        password = data['password']
+        username = data["userName"]
+        password = data["password"]
     except (json.JSONDecodeError, KeyError, TypeError):
-        return JsonResponse({'error': 'Username and password are required'}, status=400)
+        return JsonResponse({"error": "Username and password are required"}, status=400)
 
     user = authenticate(username=username, password=password)
     data = {"userName": username}
@@ -33,31 +34,37 @@ def login_user(request):
         data = {"userName": username, "status": "Authenticated"}
     return JsonResponse(data)
 
+
 def logout_user(request):
-    username = request.user.username if request.user.is_authenticated else ''
+    username = request.user.username if request.user.is_authenticated else ""
     logout(request)
-    return JsonResponse({'userName': '' if username else ''})
+    return JsonResponse({"userName": "" if username else ""})
+
 
 @csrf_exempt
 def registration(request):
-    if request.method != 'POST':
-        return JsonResponse({'error': 'POST request required'}, status=405)
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required"}, status=405)
 
     try:
         data = json.loads(request.body)
-        username = data['userName'].strip()
-        password = data['password']
-        first_name = data.get('firstName', '').strip()
-        last_name = data.get('lastName', '').strip()
-        email = data.get('email', '').strip()
+        username = data["userName"].strip()
+        password = data["password"]
+        first_name = data.get("firstName", "").strip()
+        last_name = data.get("lastName", "").strip()
+        email = data.get("email", "").strip()
     except (json.JSONDecodeError, KeyError, TypeError, AttributeError):
-        return JsonResponse({'error': 'All registration fields are required'}, status=400)
+        return JsonResponse(
+            {"error": "All registration fields are required"}, status=400
+        )
 
     if not username or not password or not email:
-        return JsonResponse({'error': 'All registration fields are required'}, status=400)
+        return JsonResponse(
+            {"error": "All registration fields are required"}, status=400
+        )
 
     if User.objects.filter(username=username).exists():
-        return JsonResponse({'userName': username, 'error': 'Already Registered'})
+        return JsonResponse({"userName": username, "error": "Already Registered"})
 
     user = User.objects.create_user(
         username=username,
@@ -67,7 +74,8 @@ def registration(request):
         email=email,
     )
     login(request, user)
-    return JsonResponse({'userName': username, 'status': 'Authenticated'})
+    return JsonResponse({"userName": username, "status": "Authenticated"})
+
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
