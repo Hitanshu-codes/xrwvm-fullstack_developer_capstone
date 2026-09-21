@@ -1,8 +1,12 @@
 <html>
 <head>
-  <!-- Link the style sheet here -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Best Cars</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
 </head>
-<div>
+<body class="about-page">
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
     <div class="container-fluid">
       <h2 style="padding-right: 5%;">Dealerships</h2>
@@ -15,54 +19,55 @@
             <a class="nav-link" style="font-size: larger;" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" style="font-size: larger;" href="/about">About Us</a>
+            <a class="nav-link active" style="font-size: larger;" href="/about/">About Us</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" style="font-size: larger;" href="/contact">Contact Us</a>
+            <a class="nav-link" style="font-size: larger;" href="/contact/">Contact Us</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   
-    <div class="card" style="width: 80%;margin: auto; margin-top:5%;">
-      <div class="banner" name="about-header">
-      <!-- Insert header information here -->
+    <main class="about-shell">
+      <div class="banner about-header" name="about-header">
+        <p class="eyebrow">OUR STORY</p>
+        <h1>About Us</h1>
+        <p>Welcome to Best Cars dealership, home to the best cars in North America. We deal in selling domestic and imported cars at reasonable prices.</p>
+        <p class="about-intro">For more than a decade, our team has helped drivers find dependable vehicles with clear pricing, thoughtful guidance, and service that continues long after the keys change hands.</p>
       </div>
-      <div style="display: flex;flex-direction: row; margin:auto">
-      <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
+      <div class="team-grid">
+      <article class="team-member">
+        <img class="card-img-top" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Portrait of Maya Thompson">
         <div class="card-body">
-          <p class="title">Person1</p>
-          <p>Person1 Title</p>
-          <p class="card-text">Some text that explains the person1 in about 2 short sentences</p>
-          <p>person1@example.com</p>
+          <p class="title">Maya Thompson</p>
+          <p class="role">General Manager</p>
+          <p class="card-text">Maya leads our dealership with a simple goal: make every purchase feel informed, comfortable, and personal.</p>
+          <p>maya@bestcars.com</p>
         </div>
-      </div>
+      </article>
 
-      <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
+      <article class="team-member">
+        <img class="card-img-top" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Portrait of Daniel Brooks">
         <div class="card-body">
-          <p class="title">Person2</p>
-          <p>Person2 Title</p>
-          <p class="card-text">Some text that explains the person2 in about 2 short sentences</p>
-          <p>person2@example.com</p>
+          <p class="title">Daniel Brooks</p>
+          <p class="role">Sales Director</p>
+          <p class="card-text">Daniel knows our inventory inside and out and enjoys matching families, commuters, and enthusiasts with the right vehicle.</p>
+          <p>daniel@bestcars.com</p>
         </div>
-      </div>
+      </article>
 
-      <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
+      <article class="team-member">
+        <img class="card-img-top" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Portrait of Priya Shah">
         <div class="card-body">
-          <p class="title">Person3</p>
-          <p>Person3 Title</p>
-          <p class="card-text">Some text that explains the person3 in about 2 short sentences</p>
-          <p>person3@example.com</p>
+          <p class="title">Priya Shah</p>
+          <p class="role">Customer Experience Manager</p>
+          <p class="card-text">Priya keeps the details moving, from a smooth test drive to a thoughtful handover and dependable after-sales support.</p>
+          <p>priya@bestcars.com</p>
         </div>
-      </div>
+      </article>
     </div>
-    </div>
-    </div>
-    
-</div>
+    </main>
+</body>
 
 </html>

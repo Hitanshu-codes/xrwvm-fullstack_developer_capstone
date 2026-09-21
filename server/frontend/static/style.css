@@ -61,6 +61,264 @@ img{
   flex:1
 }
 
+.about-page {
+  min-height: 100vh;
+  background: #f4f7f6;
+  color: #18323b;
+}
+
+.about-shell {
+  width: min(1120px, 92%);
+  margin: 48px auto;
+}
+
+.about-header {
+  padding: 48px 24px 36px;
+  text-align: center;
+  background: #ffffff;
+  border-top: 6px solid #e3b23c;
+  box-shadow: 0 10px 30px rgba(24, 50, 59, 0.08);
+}
+
+.about-header h1 {
+  margin: 4px 0 14px;
+  color: #123f4a;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+}
+
+.about-header > p:not(.eyebrow) {
+  max-width: 780px;
+  margin: 0 auto;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #bb741e;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.about-intro {
+  margin-top: 12px !important;
+  color: #53717a;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.team-member {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #d9e4e2;
+  box-shadow: 0 8px 20px rgba(24, 50, 59, 0.07);
+}
+
+.team-member img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.team-member .card-body {
+  padding: 22px;
+}
+
+.team-member .title {
+  margin: 0 0 6px;
+  padding: 0;
+  background: transparent;
+  color: #123f4a;
+  font-size: 1.35rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.team-member .role {
+  margin: 0 0 14px;
+  color: #bb741e;
+  font-weight: 700;
+}
+
+.team-member .card-text {
+  min-height: 72px;
+  color: #53717a;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .about-shell {
+    margin: 28px auto;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-member img {
+    height: 280px;
+  }
+}
+
+.contact-page {
+  min-height: 100vh;
+  background: #eef5f3;
+  color: #18323b;
+}
+
+.contact-shell {
+  width: min(1060px, 92%);
+  margin: 48px auto;
+}
+
+.contact-header {
+  max-width: 760px;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+
+.contact-header h1 {
+  margin: 4px 0 14px;
+  color: #123f4a;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+}
+
+.contact-header > p:last-child {
+  color: #53717a;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  gap: 28px;
+}
+
+.contact-details,
+.contact-message {
+  padding: 34px;
+  background: #ffffff;
+  border: 1px solid #d9e4e2;
+  box-shadow: 0 10px 30px rgba(24, 50, 59, 0.08);
+}
+
+.contact-details h2,
+.contact-message h2 {
+  margin: 0 0 10px;
+  color: #123f4a;
+}
+
+.contact-note,
+.contact-message > p {
+  color: #53717a;
+  line-height: 1.6;
+}
+
+.contact-item {
+  padding: 18px 0;
+  border-top: 1px solid #d9e4e2;
+}
+
+.contact-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #bb741e;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.contact-item address,
+.contact-item p,
+.contact-item a {
+  margin: 0;
+  color: #18323b;
+  font-style: normal;
+  line-height: 1.7;
+  text-decoration: none;
+}
+
+.contact-item a {
+  display: block;
+}
+
+.contact-item a:hover {
+  color: #bb741e;
+}
+
+.contact-message form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.contact-message label {
+  margin-top: 8px;
+  color: #18323b;
+  font-weight: 700;
+}
+
+.contact-message input,
+.contact-message textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #c6d8d5;
+  border-radius: 2px;
+  color: #18323b;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.contact-message textarea {
+  resize: vertical;
+}
+
+.contact-message input:focus,
+.contact-message textarea:focus {
+  outline: 2px solid #e3b23c;
+  outline-offset: 1px;
+}
+
+.contact-message button {
+  align-self: flex-start;
+  margin-top: 12px;
+  padding: 12px 22px;
+  border: 0;
+  background: #123f4a;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.contact-message button:hover {
+  background: #bb741e;
+}
+
+@media (max-width: 768px) {
+  .contact-shell {
+    margin: 28px auto;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-details,
+  .contact-message {
+    padding: 24px;
+  }
+}
+
 .form_panel {
   padding:2%;
   display: flex;
