@@ -54,6 +54,16 @@
   margin: .5cm;
 }
 
+.register_header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.close_icon {
+  width: 1cm;
+}
+
 .img_icon{
   width:40px;
   margin:.1cm;

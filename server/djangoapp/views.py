@@ -1,19 +1,9 @@
-# Uncomment the required imports before adding the code
-
-# from django.shortcuts import render
-# from django.http import HttpResponseRedirect, HttpResponse
-# from django.contrib.auth.models import User
-# from django.shortcuts import get_object_or_404, render, redirect
-# from django.contrib.auth import logout
-# from django.contrib import messages
-# from datetime import datetime
-
 from django.http import JsonResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 import logging
 import json
 from django.views.decorators.csrf import csrf_exempt
-# from .populate import initiate
 
 
 # Get an instance of a logger
@@ -25,11 +15,16 @@ logger = logging.getLogger(__name__)
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
-    # Get username and password from request.POST dictionary
-    data = json.loads(request.body)
-    username = data['userName']
-    password = data['password']
-    # Try to check if provide credential can be authenticated
+    if request.method != 'POST':
+        return JsonResponse({'error': 'POST request required'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        username = data['userName']
+        password = data['password']
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return JsonResponse({'error': 'Username and password are required'}, status=400)
+
     user = authenticate(username=username, password=password)
     data = {"userName": username}
     if user is not None:
@@ -38,14 +33,41 @@ def login_user(request):
         data = {"userName": username, "status": "Authenticated"}
     return JsonResponse(data)
 
-# Create a `logout_request` view to handle sign out request
-# def logout_request(request):
-# ...
+def logout_user(request):
+    username = request.user.username if request.user.is_authenticated else ''
+    logout(request)
+    return JsonResponse({'userName': '' if username else ''})
 
-# Create a `registration` view to handle sign up request
-# @csrf_exempt
-# def registration(request):
-# ...
+@csrf_exempt
+def registration(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'POST request required'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        username = data['userName'].strip()
+        password = data['password']
+        first_name = data.get('firstName', '').strip()
+        last_name = data.get('lastName', '').strip()
+        email = data.get('email', '').strip()
+    except (json.JSONDecodeError, KeyError, TypeError, AttributeError):
+        return JsonResponse({'error': 'All registration fields are required'}, status=400)
+
+    if not username or not password or not email:
+        return JsonResponse({'error': 'All registration fields are required'}, status=400)
+
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'userName': username, 'error': 'Already Registered'})
+
+    user = User.objects.create_user(
+        username=username,
+        first_name=first_name,
+        last_name=last_name,
+        password=password,
+        email=email,
+    )
+    login(request, user)
+    return JsonResponse({'userName': username, 'status': 'Authenticated'})
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
