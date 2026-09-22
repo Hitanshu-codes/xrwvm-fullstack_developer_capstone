@@ -27,7 +27,9 @@ def login_user(request):
         username = data["userName"]
         password = data["password"]
     except (json.JSONDecodeError, KeyError, TypeError):
-        return JsonResponse({"error": "Username and password are required"}, status=400)
+        return JsonResponse(
+            {"error": "Username and password are required"}, status=400
+        )
 
     user = authenticate(username=username, password=password)
     data = {"userName": username}
@@ -67,7 +69,9 @@ def registration(request):
         )
 
     if User.objects.filter(username=username).exists():
-        return JsonResponse({"userName": username, "error": "Already Registered"})
+        return JsonResponse(
+            {"userName": username, "error": "Already Registered"}
+        )
 
     user = User.objects.create_user(
         username=username,
@@ -101,7 +105,9 @@ def get_dealer_reviews(request, dealer_id):
     reviews = get_request("/fetchReviews/dealer/" + str(dealer_id))
     for review_detail in reviews:
         sentiment = analyze_review_sentiments(review_detail["review"])
-        review_detail["sentiment"] = sentiment.get("sentiment", "neutral") if sentiment else "neutral"
+        review_detail["sentiment"] = (
+            sentiment.get("sentiment", "neutral") if sentiment else "neutral"
+        )
 
     return JsonResponse({"status": 200, "reviews": reviews})
 
@@ -115,10 +121,14 @@ def add_review(request):
         data = json.loads(request.body)
         response = post_review(data)
         if response is None:
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse(
+                {"status": 401, "message": "Error in posting review"}
+            )
         return JsonResponse({"status": 200})
     except Exception:
-        return JsonResponse({"status": 401, "message": "Error in posting review"})
+        return JsonResponse(
+            {"status": 401, "message": "Error in posting review"}
+        )
 
 
 def get_cars(request):
@@ -132,6 +142,8 @@ def get_cars(request):
     cars = []
 
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append(
+            {"CarModel": car_model.name, "CarMake": car_model.car_make.name}
+        )
 
     return JsonResponse({"CarModels": cars})
