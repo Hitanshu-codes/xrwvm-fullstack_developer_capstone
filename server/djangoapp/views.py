@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from .models import CarMake, CarModel
 from .populate import initiate
+from .restapis import get_request, analyze_review_sentiments, post_review
 import logging
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -79,22 +80,45 @@ def registration(request):
     return JsonResponse({"userName": username, "status": "Authenticated"})
 
 
-# # Update the `get_dealerships` view to render the index page with
-# a list of dealerships
-# def get_dealerships(request):
-# ...
+def get_dealerships(request, state="All"):
+    endpoint = "/fetchDealers" if state == "All" else "/fetchDealers/" + state
+    dealerships = get_request(endpoint)
+    return JsonResponse({"status": 200, "dealers": dealerships})
 
-# Create a `get_dealer_reviews` view to render the reviews of a dealer
-# def get_dealer_reviews(request,dealer_id):
-# ...
 
-# Create a `get_dealer_details` view to render the dealer details
-# def get_dealer_details(request, dealer_id):
-# ...
+def get_dealer_details(request, dealer_id):
+    if not dealer_id:
+        return JsonResponse({"status": 400, "message": "Bad Request"})
 
-# Create a `add_review` view to submit a review
-# def add_review(request):
-# ...
+    dealership = get_request("/fetchDealer/" + str(dealer_id))
+    return JsonResponse({"status": 200, "dealer": [dealership]})
+
+
+def get_dealer_reviews(request, dealer_id):
+    if not dealer_id:
+        return JsonResponse({"status": 400, "message": "Bad Request"})
+
+    reviews = get_request("/fetchReviews/dealer/" + str(dealer_id))
+    for review_detail in reviews:
+        sentiment = analyze_review_sentiments(review_detail["review"])
+        review_detail["sentiment"] = sentiment.get("sentiment", "neutral") if sentiment else "neutral"
+
+    return JsonResponse({"status": 200, "reviews": reviews})
+
+
+@csrf_exempt
+def add_review(request):
+    if request.user.is_anonymous:
+        return JsonResponse({"status": 403, "message": "Unauthorized"})
+
+    try:
+        data = json.loads(request.body)
+        response = post_review(data)
+        if response is None:
+            return JsonResponse({"status": 401, "message": "Error in posting review"})
+        return JsonResponse({"status": 200})
+    except Exception:
+        return JsonResponse({"status": 401, "message": "Error in posting review"})
 
 
 def get_cars(request):
